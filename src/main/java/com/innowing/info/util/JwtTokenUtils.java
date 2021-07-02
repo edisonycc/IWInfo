@@ -1,6 +1,6 @@
 package com.innowing.info.util;
 
-import com.innowing.info.entity.User;
+import com.innowing.info.entity.primary.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

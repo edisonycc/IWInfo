@@ -6,18 +6,25 @@ spring:
 #  devtools:
 #    restart:
 #      enabled: true #开启热部署
-  datasource:
+  datasource-primary:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/innowing?characterEncoding=utf-8
     username: root
     password:
+  datasource-door-access-sys:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://147.8.151.124\IMS:64910;database=iMS
+    username: iwinfo
+    password: Foeng#4!
   jpa:
-    hibernate:
-      ddl-auto: create-drop
-      dialect: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
-        format_sql=true: ture
+        format_sql: true
+    show-sql: true
+
+
+
+
 
 
   #    type: com.zaxxer.hikari.HikariDataSource

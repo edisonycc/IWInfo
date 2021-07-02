@@ -12,7 +12,7 @@ public class CrosConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 //.allowedOrigins("*")
                 .allowedOriginPatterns("*") // SpringBoot2.4.0 [allowedOriginPatterns]代替[allowedOrigins]
-                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "PATCH", "DELETE")
                 .allowCredentials(true)
                 .maxAge(3600)
                 .allowedHeaders("*");
