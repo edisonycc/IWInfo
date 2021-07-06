@@ -1,8 +1,8 @@
 package com.innowing.info.entity.primary;
 
 
-import com.innowing.info.entity.doorAccessSys.DASTransaction;
-import com.innowing.info.entity.doorAccessSys.DASUser;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.innowing.info.entity.primary.project.ProjectStudent;
 import lombok.Data;
 
@@ -13,6 +13,9 @@ import java.util.List;
 @Data
 @Entity(name = "EligibleStudent")
 @Table(name = "eligible_student")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id") // fix Jackson infinite recursion problem
 public class EligibleStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

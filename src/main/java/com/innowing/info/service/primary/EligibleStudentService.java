@@ -43,7 +43,9 @@ public class EligibleStudentService {
 //            return ServerResponse.getInstance().responseEnum(ResponseEnum.USERNAME_EXIST);
         try {
             eligibleStudentRepository.save(eligibleStudent);
-            return ServerResponse.getInstance().responseEnum(ResponseEnum.SUCCESS);
+            return ServerResponse.
+                    getInstance().
+                    responseEnum(ResponseEnum.SUCCESS);
         }catch (Exception e){
             e.printStackTrace();
             return ServerResponse.getInstance()
@@ -72,48 +74,48 @@ public class EligibleStudentService {
     public ServerResponse updateEligibleStudent(Long id, EligibleStudent eligibleStudent) {
         try {
 //            Long id = eligibleStudent.getId();
-            Optional<EligibleStudent> _student = eligibleStudentRepository.findById(id);
+            Optional<EligibleStudent> _studentOptional = eligibleStudentRepository.findById(id);
 
-            if(_student.isPresent()) {
-                if (eligibleStudent.getHkuId() != null  && !Objects.equals(_student.get().getHkuId(), eligibleStudent.getHkuId()))
-                    _student.get().setHkuId(eligibleStudent.getHkuId());
-                if (eligibleStudent.getName() != null  && !Objects.equals(_student.get().getName(), eligibleStudent.getName()))
-                    _student.get().setName(eligibleStudent.getName());
-                if (eligibleStudent.getEmail() != null  && !Objects.equals(_student.get().getEmail(), eligibleStudent.getEmail()))
-                    _student.get().setEmail(eligibleStudent.getEmail());
-                if (eligibleStudent.getCardId() != null  && !Objects.equals(_student.get().getCardId(), eligibleStudent.getCardId()))
-                    _student.get().setCardId(eligibleStudent.getCardId());
-                if (eligibleStudent.getStudyYear() != null  && !Objects.equals(_student.get().getStudyYear(), eligibleStudent.getStudyYear()))
-                    _student.get().setStudyYear(eligibleStudent.getStudyYear());
-                if (eligibleStudent.getFaculty() != null  && !Objects.equals(_student.get().getFaculty(), eligibleStudent.getFaculty()))
-                    _student.get().setFaculty(eligibleStudent.getFaculty());
-                if (eligibleStudent.getDepartment() != null  && !Objects.equals(_student.get().getDepartment(), eligibleStudent.getDepartment()))
-                    _student.get().setDepartment(eligibleStudent.getDepartment());
-                if (eligibleStudent.getCurriculum() != null  && !Objects.equals(_student.get().getCurriculum(), eligibleStudent.getCurriculum()))
-                    _student.get().setCurriculum(eligibleStudent.getCurriculum());
-                if (eligibleStudent.getTitle() != null  && !Objects.equals(_student.get().getTitle(), eligibleStudent.getTitle()))
-                    _student.get().setTitle(eligibleStudent.getTitle());
-                if (eligibleStudent.getAccessGranted() != null  && !Objects.equals(_student.get().getAccessGranted(), eligibleStudent.getAccessGranted()))
-                    _student.get().setAccessGranted(eligibleStudent.getAccessGranted());
-                if (eligibleStudent.getIsActive() != null  && !Objects.equals(_student.get().getIsActive(), eligibleStudent.getIsActive()))
-                    _student.get().setIsActive(eligibleStudent.getIsActive());
+            if(_studentOptional.isPresent()) {
+                if (eligibleStudent.getHkuId() != null  && !Objects.equals(_studentOptional.get().getHkuId(), eligibleStudent.getHkuId()))
+                    _studentOptional.get().setHkuId(eligibleStudent.getHkuId());
+                if (eligibleStudent.getName() != null  && !Objects.equals(_studentOptional.get().getName(), eligibleStudent.getName()))
+                    _studentOptional.get().setName(eligibleStudent.getName());
+                if (eligibleStudent.getEmail() != null  && !Objects.equals(_studentOptional.get().getEmail(), eligibleStudent.getEmail()))
+                    _studentOptional.get().setEmail(eligibleStudent.getEmail());
+                if (eligibleStudent.getCardId() != null  && !Objects.equals(_studentOptional.get().getCardId(), eligibleStudent.getCardId()))
+                    _studentOptional.get().setCardId(eligibleStudent.getCardId());
+                if (eligibleStudent.getStudyYear() != null  && !Objects.equals(_studentOptional.get().getStudyYear(), eligibleStudent.getStudyYear()))
+                    _studentOptional.get().setStudyYear(eligibleStudent.getStudyYear());
+                if (eligibleStudent.getFaculty() != null  && !Objects.equals(_studentOptional.get().getFaculty(), eligibleStudent.getFaculty()))
+                    _studentOptional.get().setFaculty(eligibleStudent.getFaculty());
+                if (eligibleStudent.getDepartment() != null  && !Objects.equals(_studentOptional.get().getDepartment(), eligibleStudent.getDepartment()))
+                    _studentOptional.get().setDepartment(eligibleStudent.getDepartment());
+                if (eligibleStudent.getCurriculum() != null  && !Objects.equals(_studentOptional.get().getCurriculum(), eligibleStudent.getCurriculum()))
+                    _studentOptional.get().setCurriculum(eligibleStudent.getCurriculum());
+                if (eligibleStudent.getTitle() != null  && !Objects.equals(_studentOptional.get().getTitle(), eligibleStudent.getTitle()))
+                    _studentOptional.get().setTitle(eligibleStudent.getTitle());
+                if (eligibleStudent.getAccessGranted() != null  && !Objects.equals(_studentOptional.get().getAccessGranted(), eligibleStudent.getAccessGranted()))
+                    _studentOptional.get().setAccessGranted(eligibleStudent.getAccessGranted());
+                if (eligibleStudent.getIsActive() != null  && !Objects.equals(_studentOptional.get().getIsActive(), eligibleStudent.getIsActive()))
+                    _studentOptional.get().setIsActive(eligibleStudent.getIsActive());
                 // nullable dateTime fields
-                if (!Objects.equals(_student.get().getAppliedMembership(), eligibleStudent.getAppliedMembership()))
-                    _student.get().setAppliedMembership(eligibleStudent.getAppliedMembership());
-                if (!Objects.equals(_student.get().getAgreedToPay(), eligibleStudent.getAgreedToPay()))
-                    _student.get().setAgreedToPay(eligibleStudent.getAgreedToPay());
-                if (!Objects.equals(_student.get().getSiteVisited(), eligibleStudent.getSiteVisited()))
-                    _student.get().setSiteVisited(eligibleStudent.getSiteVisited());
-                if (!Objects.equals(_student.get().getPassedQuiz(), eligibleStudent.getPassedQuiz()))
-                    _student.get().setPassedQuiz(eligibleStudent.getPassedQuiz());
-                if (!Objects.equals(_student.get().getSentToFeo(), eligibleStudent.getSentToFeo()))
-                    _student.get().setSentToFeo(eligibleStudent.getSentToFeo());
-                if (!Objects.equals(_student.get().getDepositPaid(), eligibleStudent.getDepositPaid()))
-                    _student.get().setDepositPaid(eligibleStudent.getDepositPaid());
-                if (!Objects.equals(_student.get().getConfirmedMember(), eligibleStudent.getConfirmedMember()))
-                    _student.get().setConfirmedMember(eligibleStudent.getConfirmedMember());
+                if (!Objects.equals(_studentOptional.get().getAppliedMembership(), eligibleStudent.getAppliedMembership()))
+                    _studentOptional.get().setAppliedMembership(eligibleStudent.getAppliedMembership());
+                if (!Objects.equals(_studentOptional.get().getAgreedToPay(), eligibleStudent.getAgreedToPay()))
+                    _studentOptional.get().setAgreedToPay(eligibleStudent.getAgreedToPay());
+                if (!Objects.equals(_studentOptional.get().getSiteVisited(), eligibleStudent.getSiteVisited()))
+                    _studentOptional.get().setSiteVisited(eligibleStudent.getSiteVisited());
+                if (!Objects.equals(_studentOptional.get().getPassedQuiz(), eligibleStudent.getPassedQuiz()))
+                    _studentOptional.get().setPassedQuiz(eligibleStudent.getPassedQuiz());
+                if (!Objects.equals(_studentOptional.get().getSentToFeo(), eligibleStudent.getSentToFeo()))
+                    _studentOptional.get().setSentToFeo(eligibleStudent.getSentToFeo());
+                if (!Objects.equals(_studentOptional.get().getDepositPaid(), eligibleStudent.getDepositPaid()))
+                    _studentOptional.get().setDepositPaid(eligibleStudent.getDepositPaid());
+                if (!Objects.equals(_studentOptional.get().getConfirmedMember(), eligibleStudent.getConfirmedMember()))
+                    _studentOptional.get().setConfirmedMember(eligibleStudent.getConfirmedMember());
 
-                eligibleStudentRepository.save(_student.get());
+                eligibleStudentRepository.save(_studentOptional.get());
                 return ServerResponse.getInstance().responseEnum(ResponseEnum.UPDATE_SUCCESS);
             }
 
@@ -139,13 +141,17 @@ public class EligibleStudentService {
     @Transactional
     public ServerResponse updateEligibleStudentList(List<EligibleStudent> eligibleStudentList) {
         try {
-            List<EligibleStudent> nonexistingElighbleStdList = new ArrayList<>();
+            List<EligibleStudent> nonExistingEligibleStdList = new ArrayList<>();
             eligibleStudentList.forEach(eligibleStudent -> {
                 if (eligibleStudent.getHkuId() != null) {
-                    Optional<EligibleStudent> _student = eligibleStudentRepository.findEligibleStudentByHkuId(eligibleStudent.getHkuId());
-                    if (_student.isPresent()) {
-                        updateEligibleStudent(_student.get().getId(), eligibleStudent);
+                    Optional<EligibleStudent> _studentOptional = eligibleStudentRepository.findEligibleStudentByHkuId(eligibleStudent.getHkuId());
+                    if (_studentOptional.isPresent()) {
+                        updateEligibleStudent(_studentOptional.get().getId(), eligibleStudent);
                     }
+                    else {
+                        eligibleStudentRepository.save(eligibleStudent);
+                    }
+
                 }
                 else if (eligibleStudent.getEmail() != null) {
                     String str = eligibleStudent.getEmail();
@@ -158,15 +164,15 @@ public class EligibleStudentService {
                     }
                     else {
                         log.info(eligibleStudent.toString());
-                        nonexistingElighbleStdList.add(eligibleStudent);
+                        nonExistingEligibleStdList.add(eligibleStudent);
                         createEligibleStudent(eligibleStudent);
                     }
                 }
                 else {
-                    nonexistingElighbleStdList.add(eligibleStudent);
+                    nonExistingEligibleStdList.add(eligibleStudent);
                 }
             });
-            return ServerResponse.getInstance().responseEnum(ResponseEnum.SUCCESS).data("nonexistingEligibleStdList", nonexistingElighbleStdList);
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.SUCCESS).data("nonexistingEligibleStdList", nonExistingEligibleStdList);
         } catch (Exception e) {
             log.info(e.getMessage());
             return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);

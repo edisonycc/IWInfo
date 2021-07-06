@@ -1,7 +1,7 @@
 package com.innowing.info.entity.primary.project;
 
-import com.innowing.info.entity.primary.EligibleStudent;
-import com.innowing.info.entity.primary.Staff;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -13,6 +13,9 @@ import java.util.List;
 @Data
 @Entity(name = "Project")
 @Table(name = "project")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
