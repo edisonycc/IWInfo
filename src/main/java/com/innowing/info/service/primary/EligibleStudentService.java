@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -64,9 +65,16 @@ public class EligibleStudentService {
     }
 
     public ServerResponse getEligibleStudentByHkuId(Long hkuId) {
-        Optional<EligibleStudent> eligibleStudents = eligibleStudentRepository.findEligibleStudentByHkuId(hkuId);
-        if (!eligibleStudents.isEmpty())
-            return ServerResponse.getInstance().responseEnum(ResponseEnum.GET_SUCCESS).data("eligibleStudents", eligibleStudents);
+        Optional<EligibleStudent> eligibleStudentOptional = eligibleStudentRepository.findEligibleStudentByHkuId(hkuId);
+        if (eligibleStudentOptional.isPresent())
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.GET_SUCCESS).data("eligibleStudents", eligibleStudentOptional.get());
+        return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
+    }
+
+    public ServerResponse getEligibleStudentById(Long id) {
+        Optional<EligibleStudent> eligibleStudentOptional = eligibleStudentRepository.findById(id);
+        if (eligibleStudentOptional.isPresent())
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.GET_SUCCESS).data("eligibleStudents", eligibleStudentOptional.get());
         return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
     }
 
@@ -99,21 +107,73 @@ public class EligibleStudentService {
                     _studentOptional.get().setAccessGranted(eligibleStudent.getAccessGranted());
                 if (eligibleStudent.getIsActive() != null  && !Objects.equals(_studentOptional.get().getIsActive(), eligibleStudent.getIsActive()))
                     _studentOptional.get().setIsActive(eligibleStudent.getIsActive());
-                // nullable dateTime fields
-                if (!Objects.equals(_studentOptional.get().getAppliedMembership(), eligibleStudent.getAppliedMembership()))
-                    _studentOptional.get().setAppliedMembership(eligibleStudent.getAppliedMembership());
-                if (!Objects.equals(_studentOptional.get().getAgreedToPay(), eligibleStudent.getAgreedToPay()))
-                    _studentOptional.get().setAgreedToPay(eligibleStudent.getAgreedToPay());
-                if (!Objects.equals(_studentOptional.get().getSiteVisited(), eligibleStudent.getSiteVisited()))
-                    _studentOptional.get().setSiteVisited(eligibleStudent.getSiteVisited());
-                if (!Objects.equals(_studentOptional.get().getPassedQuiz(), eligibleStudent.getPassedQuiz()))
-                    _studentOptional.get().setPassedQuiz(eligibleStudent.getPassedQuiz());
-                if (!Objects.equals(_studentOptional.get().getSentToFeo(), eligibleStudent.getSentToFeo()))
-                    _studentOptional.get().setSentToFeo(eligibleStudent.getSentToFeo());
-                if (!Objects.equals(_studentOptional.get().getDepositPaid(), eligibleStudent.getDepositPaid()))
-                    _studentOptional.get().setDepositPaid(eligibleStudent.getDepositPaid());
-                if (!Objects.equals(_studentOptional.get().getConfirmedMember(), eligibleStudent.getConfirmedMember()))
-                    _studentOptional.get().setConfirmedMember(eligibleStudent.getConfirmedMember());
+
+                // nullable dateTime fields. (1970-01-01 00:00:00 => set null)
+                if (eligibleStudent.getAppliedMembership() != null
+                        && !Objects.equals(_studentOptional.get().getAppliedMembership(), eligibleStudent.getAppliedMembership())
+                ) {
+                    if (eligibleStudent.getAppliedMembership().getYear() == 1970)
+                    {
+                        _studentOptional.get().setAppliedMembership(null);
+//                        log.info(_studentOptional.get().getAppliedMembership().toString());
+                    }
+                    else _studentOptional.get().setAppliedMembership(eligibleStudent.getAppliedMembership());
+                }
+                if (eligibleStudent.getAgreedToPay() != null
+                        && !Objects.equals(_studentOptional.get().getAgreedToPay(), eligibleStudent.getAgreedToPay())
+                ) {
+                    if (eligibleStudent.getAgreedToPay().getYear() == 1970)
+                    {
+                        _studentOptional.get().setAgreedToPay(null);
+                    }
+                    else _studentOptional.get().setAgreedToPay(eligibleStudent.getAgreedToPay());
+                }
+                if (eligibleStudent.getSiteVisited() != null
+                        && !Objects.equals(_studentOptional.get().getSiteVisited(), eligibleStudent.getSiteVisited())
+                ){
+                    if (eligibleStudent.getSiteVisited().getYear() == 1970)
+                    {
+                        _studentOptional.get().setSiteVisited(null);
+                    }
+                    else _studentOptional.get().setSiteVisited(eligibleStudent.getSiteVisited());
+                }
+                if (eligibleStudent.getPassedQuiz() != null
+                        && !Objects.equals(_studentOptional.get().getPassedQuiz(), eligibleStudent.getPassedQuiz())
+                ){
+                    if (eligibleStudent.getPassedQuiz().getYear() == 1970)
+                    {
+                        _studentOptional.get().setPassedQuiz(null);
+
+                    }
+                    else _studentOptional.get().setPassedQuiz(eligibleStudent.getPassedQuiz());
+                }
+                if (eligibleStudent.getSentToFeo() != null
+                        && !Objects.equals(_studentOptional.get().getSentToFeo(), eligibleStudent.getSentToFeo())
+                ){
+                    if (eligibleStudent.getSentToFeo().getYear() == 1970)
+                    {
+                        _studentOptional.get().setSentToFeo(null);
+                    }
+                    else _studentOptional.get().setSentToFeo(eligibleStudent.getSentToFeo());
+                }
+                if (eligibleStudent.getDepositPaid() != null
+                        && !Objects.equals(_studentOptional.get().getDepositPaid(), eligibleStudent.getDepositPaid())
+                ){
+                    if (eligibleStudent.getDepositPaid().getYear() == 1970)
+                    {
+                        _studentOptional.get().setDepositPaid(null);
+                    }
+                    else _studentOptional.get().setDepositPaid(eligibleStudent.getDepositPaid());
+                }
+                if (eligibleStudent.getConfirmedMember() != null
+                        && !Objects.equals(_studentOptional.get().getConfirmedMember(), eligibleStudent.getConfirmedMember())
+                ){
+                    if (eligibleStudent.getConfirmedMember().getYear() == 1970)
+                    {
+                        _studentOptional.get().setConfirmedMember(null);
+                    }
+                    else _studentOptional.get().setConfirmedMember(eligibleStudent.getConfirmedMember());
+                }
 
                 eligibleStudentRepository.save(_studentOptional.get());
                 return ServerResponse.getInstance().responseEnum(ResponseEnum.UPDATE_SUCCESS);
@@ -143,22 +203,26 @@ public class EligibleStudentService {
         try {
             List<EligibleStudent> nonExistingEligibleStdList = new ArrayList<>();
             eligibleStudentList.forEach(eligibleStudent -> {
+                log.info(eligibleStudent.getEmail());
                 if (eligibleStudent.getHkuId() != null) {
                     Optional<EligibleStudent> _studentOptional = eligibleStudentRepository.findEligibleStudentByHkuId(eligibleStudent.getHkuId());
                     if (_studentOptional.isPresent()) {
                         updateEligibleStudent(_studentOptional.get().getId(), eligibleStudent);
+                        return;
                     }
-                    else {
-                        eligibleStudentRepository.save(eligibleStudent);
-                    }
-
                 }
-                else if (eligibleStudent.getEmail() != null) {
+                if (eligibleStudent.getEmail() != null) {
                     String str = eligibleStudent.getEmail();
+                    log.info(str.substring(0, str.indexOf("@")));
                     Optional<List<EligibleStudent>> _studentList = eligibleStudentRepository.findEligibleStudentByEmailStartingWith(str.substring(0, str.indexOf("@")));
                     if(_studentList.isPresent() && !_studentList.get().isEmpty()) {
+//                        log.info(_studentList.get().toString());
+                        // if _studentList.get.length > 1, will cause duplicate email error, need to be handled
                         _studentList.get().forEach(_std -> {
-                            if (_std.getName().equals(eligibleStudent.getName()))
+//                            log.info(_std.getName(), eligibleStudent.getName());
+//                            log.info(eligibleStudent.getName());
+//                            log.info(String.valueOf(_std.getName().equals(eligibleStudent.getName())));
+                            if (_std.getName().equalsIgnoreCase(eligibleStudent.getName()))
                                 updateEligibleStudent(_std.getId(), eligibleStudent);
                         });
                     }
@@ -169,6 +233,7 @@ public class EligibleStudentService {
                     }
                 }
                 else {
+                    createEligibleStudent(eligibleStudent);
                     nonExistingEligibleStdList.add(eligibleStudent);
                 }
             });
@@ -181,4 +246,6 @@ public class EligibleStudentService {
 
 
     }
+
+
 }

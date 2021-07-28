@@ -18,12 +18,18 @@ import java.util.List;
  * @Version: 1.0
  */
 @Controller
-@RequestMapping(path = "api/project-student")
+@RequestMapping(path = "project-student")
 public class ProjectStudentController {
     private final ProjectStudentService projectStudentService;
     @Autowired
     public ProjectStudentController(ProjectStudentService projectStudentService) {
         this.projectStudentService = projectStudentService;
+    }
+
+    @GetMapping("projectId")
+    @ResponseBody
+    public ServerResponse getProjectStudentsByProjectId(@RequestParam Long projectId) {
+        return projectStudentService.getProjectStudentsByProjectId(projectId);
     }
 
     @PostMapping
@@ -36,5 +42,11 @@ public class ProjectStudentController {
     @ResponseBody
     ServerResponse updateProjectStudentList(@RequestBody List<ProjectStudent> projectStudentList){
         return projectStudentService.updateProjectStudentList(projectStudentList);
+    }
+
+    @DeleteMapping("{projectId}/{eligibleStudentId}")
+    @ResponseBody
+    ServerResponse deleteProjectStudent(@PathVariable long projectId, @PathVariable long eligibleStudentId) {
+        return projectStudentService.deleteProjectStudent(projectId, eligibleStudentId);
     }
 }

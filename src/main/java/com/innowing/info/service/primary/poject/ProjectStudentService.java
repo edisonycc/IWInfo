@@ -11,8 +11,10 @@ import com.innowing.info.repository.primary.project.ProjectRepository;
 import com.innowing.info.repository.primary.project.ProjectStudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -79,5 +81,24 @@ public class ProjectStudentService {
             log.info(e.getMessage());
             return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
         }
+    }
+
+    @Modifying
+    @Transactional
+    public ServerResponse deleteProjectStudent(long projectId, long eligibleStudentId) {
+        try {
+            projectStudentRepository.deleteById_ProjectIdAndId_EligibleStudentId(projectId,eligibleStudentId);
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.DELETE_SUCCESS);
+        } catch(Exception e) {
+            log.info(e.getMessage());
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
+        }
+    }
+
+    public ServerResponse getProjectStudentsByProjectId(Long projectId) {
+        Optional<List<ProjectStudent>> ProjectStudentsListOptional = projectStudentRepository.getProjectStudentByProject_Id(projectId);
+        if (ProjectStudentsListOptional.isPresent())
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.GET_SUCCESS).data("projectStudentList", ProjectStudentsListOptional.get());
+        return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
     }
 }

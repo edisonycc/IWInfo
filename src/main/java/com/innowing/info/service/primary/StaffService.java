@@ -2,6 +2,7 @@ package com.innowing.info.service.primary;
 
 import com.innowing.info.common.ResponseEnum;
 import com.innowing.info.common.ServerResponse;
+import com.innowing.info.entity.primary.EligibleStudent;
 import com.innowing.info.model.StaffPage;
 import com.innowing.info.model.StaffSearchCriteria;
 import com.innowing.info.repository.primary.StaffCriteriaRepository;
@@ -138,5 +139,19 @@ public class StaffService {
     public ServerResponse updateStaffList(List<Staff> staffList) {
         staffList.forEach(staff -> updateStaff(staff.getHkuId(), staff));
         return ServerResponse.getInstance().responseEnum(ResponseEnum.SUCCESS);
+    }
+
+    public ServerResponse getStaffById(Long id) {
+        Optional<Staff> staffOptional = staffRepository.findById(id);
+        if (staffOptional.isPresent())
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.GET_SUCCESS).data("staff", staffOptional.get());
+        return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
+    }
+
+    public ServerResponse getStaffByUid(Long hkuId) {
+        Optional<Staff> staffOptional = staffRepository.findStaffByHkuId(hkuId);
+        if (staffOptional.isPresent())
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.GET_SUCCESS).data("staff", staffOptional.get());
+        return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
     }
 }

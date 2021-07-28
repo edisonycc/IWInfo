@@ -1,7 +1,9 @@
 package com.innowing.info.entity.primary;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.innowing.info.entity.primary.project.ProjectStudent;
 import lombok.Data;
@@ -13,9 +15,9 @@ import java.util.List;
 @Data
 @Entity(name = "EligibleStudent")
 @Table(name = "eligible_student")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id") // fix Jackson infinite recursion problem
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id") // fix Jackson infinite recursion problem
 public class EligibleStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,8 +54,9 @@ public class EligibleStudent {
     @OneToMany(
             mappedBy = "eligibleStudent",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
+    @JsonManagedReference(value = "student-projects")
     private List<ProjectStudent> studentProjects;
 
 

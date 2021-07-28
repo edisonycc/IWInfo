@@ -35,6 +35,18 @@ public class StaffController {
         return staffService.getStaffs(staffPage, staffSearchCriteria);
     }
 
+    @GetMapping("id")
+    @ResponseBody
+    public ServerResponse getStaffById(@RequestParam Long id) {
+        return staffService.getStaffById(id);
+    }
+
+    @GetMapping("hkuId")
+    @ResponseBody
+    public ServerResponse getStaffByUid(@RequestParam Long hkuId) {
+        return staffService.getStaffByUid(hkuId);
+    }
+
     @PatchMapping(path = "{hkuId}")
     @ResponseBody
     public void updateStaff (@PathVariable Long hkuId, Staff staff) {

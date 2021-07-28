@@ -46,6 +46,12 @@ public class EligibleStudentController {
     public ServerResponse getEligibleStudentByHkuId(@PathVariable Long hkuId) {
         return eligibleStudentService.getEligibleStudentByHkuId(hkuId);
     }
+
+    @GetMapping("id")
+    @ResponseBody
+    public ServerResponse getEligibleStudentById(@RequestParam Long id) {
+        return eligibleStudentService.getEligibleStudentById(id);
+    }
 //
     @PatchMapping("{id}")
     @ResponseBody

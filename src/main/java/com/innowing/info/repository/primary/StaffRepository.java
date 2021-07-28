@@ -16,4 +16,6 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
 
     @Transactional
     void deleteByHkuId(Long hkuId);
+
+    Optional<Staff> findStaffByEmail(String email);
 }
