@@ -24,8 +24,8 @@ public class StaffController {
 
     @PostMapping
     @ResponseBody
-    public void createStaff(@RequestBody Staff staff) {
-        staffService.createStaff(staff);
+    public ServerResponse createStaff(@RequestBody Staff staff) {
+        return staffService.createStaff(staff);
     }
 
     @GetMapping
@@ -47,10 +47,10 @@ public class StaffController {
         return staffService.getStaffByUid(hkuId);
     }
 
-    @PatchMapping(path = "{hkuId}")
+    @PatchMapping("{id}")
     @ResponseBody
-    public void updateStaff (@PathVariable Long hkuId, Staff staff) {
-        staffService.updateStaff(hkuId, staff);
+    public ServerResponse updateStaff (@PathVariable Long id, @RequestBody Staff staff) {
+        return staffService.updateStaff(id, staff);
     }
 
     @PatchMapping("list")
@@ -61,8 +61,8 @@ public class StaffController {
 
 
     @DeleteMapping(path = "{hkuId}")
-    public void deleteStaff(@PathVariable long hkuId) {
-        staffService.deleteStaff(hkuId);
+    public ServerResponse deleteStaff(@PathVariable long hkuId) {
+        return staffService.deleteStaff(hkuId);
     }
 
 

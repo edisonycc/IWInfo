@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.innowing.info.entity.primary.facility.FacilityStudentSkill;
+import com.innowing.info.entity.primary.facility.FacilityStudentUsage;
 import com.innowing.info.entity.primary.project.ProjectStudent;
 import lombok.Data;
 
@@ -54,10 +56,50 @@ public class EligibleStudent {
     @OneToMany(
             mappedBy = "eligibleStudent",
             cascade = CascadeType.ALL,
+            orphanRemoval = true,
             fetch = FetchType.LAZY
     )
     @JsonManagedReference(value = "student-projects")
     private List<ProjectStudent> studentProjects;
+
+    @OneToMany(
+            mappedBy = "eligibleStudent",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @JsonManagedReference(value = "student-facilities-skill")
+    private List<FacilityStudentSkill> facilityStudentSkills;
+
+    @OneToMany(
+            mappedBy = "eligibleStudent",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @JsonManagedReference(value = "student-facilities-usage")
+    private List<FacilityStudentUsage> facilityStudentUsages;
+
+    public void setFacilityStudentSkills(List<FacilityStudentSkill> studentFacilitySkills) {
+        if(this.facilityStudentSkills == null) {
+            this.facilityStudentSkills = studentFacilitySkills;
+        } else {
+            this.facilityStudentSkills.clear();
+            this.facilityStudentSkills.addAll(studentFacilitySkills);
+        }
+    }
+//
+    public void setFacilityStudentUsages(List<FacilityStudentUsage> facilityStudentUsages) {
+        if(this.facilityStudentUsages == null) {
+            this.facilityStudentUsages = facilityStudentUsages;
+        } else {
+            this.facilityStudentUsages.clear();
+            this.facilityStudentUsages.addAll(facilityStudentUsages);
+        }
+    }
+
+
+
 
 
 //    // not working

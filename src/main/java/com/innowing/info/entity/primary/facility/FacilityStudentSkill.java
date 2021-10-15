@@ -1,9 +1,9 @@
-package com.innowing.info.entity.primary.project;
+package com.innowing.info.entity.primary.facility;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.innowing.info.entity.primary.EligibleStudent;
+import com.innowing.info.entity.primary.project.Project;
+import com.innowing.info.entity.primary.project.ProjectStudentId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,14 +12,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "project_student")
+@Table(name = "facility_student_skill")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectStudent {
-
+public class FacilityStudentSkill {
     @EmbeddedId
-    private ProjectStudentId id;
+    private FacilityStudentId id;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -27,17 +26,17 @@ public class ProjectStudent {
             CascadeType.REFRESH,
             CascadeType.DETACH
     })
-    @MapsId("projectId")
-    @JsonBackReference(value = "project-students")
+    @MapsId("facilityId")
+    @JsonBackReference(value = "facility-students-skill")
     @JoinColumn(
-            name = "project_id",
+            name = "facility_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "project_student_project_id_fk"
+                    name = "facility_student_skill_facility_id_fk"
             )
     )
     @EqualsAndHashCode.Exclude
-    private Project project;
+    private Facility facility;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -46,34 +45,27 @@ public class ProjectStudent {
             CascadeType.DETACH
     })
     @MapsId("eligibleStudentId")
-    @JsonBackReference(value = "student-projects")
+    @JsonBackReference(value = "student-facilities-skill")
     @JoinColumn(
             name = "eligible_student_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "project_eligible_student_eligible_student_id_fk"
+                    name = "facility_student_skill_student_id_fk"
             )
     )
     @EqualsAndHashCode.Exclude
     private EligibleStudent eligibleStudent;
 
-    private String role;
+    private Integer level;
 
     @Override
     // fix StackOverflowError
     public String toString() {
-        return "projectStudents:{" +
+        return "facilityStudentSkills:{" +
                 "id:{ eligibleStudentId:" + id.getEligibleStudentId() + "," +
-                    "projectId:" + id.getProjectId() +
+                "facilityId:" + id.getFacilityId() +
                 "}, " +
-                "role:" + role +
+                "level:" + level +
                 '}';
     }
-
-
-
-
-
 }
-
-

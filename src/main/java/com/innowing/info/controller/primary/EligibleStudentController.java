@@ -33,6 +33,11 @@ public class EligibleStudentController {
         return eligibleStudentService.createEligibleStudent(eligibleStudent);
     }
 
+    @PostMapping("setAllStudentInactive")
+    @ResponseBody
+    ServerResponse setAllStudentInactive() { return eligibleStudentService.setAllStudentInactive();}
+
+
     @GetMapping
     @ResponseBody
     ServerResponse getEligibleStudents(EligibleStudentPage eligibleStudentPage,

@@ -25,7 +25,7 @@ public class UserService {
 
     public ServerResponse userRegister(User user) {
         try {
-            if(null == user.getUsername() || null==user.getPassword())
+            if(null == user.getUsername() || null == user.getPassword())
                 return  ServerResponse.getInstance().responseEnum(ResponseEnum.INVALID_PARAM);
             // user exist
             if(null != userRepository.findByUsername(user.getUsername()))
@@ -34,7 +34,7 @@ public class UserService {
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             userRepository.save(user);
             return ServerResponse.getInstance().responseEnum(ResponseEnum.REGISTER_SUCCESS);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ServerResponse.getInstance().responseEnum(ResponseEnum.INNER_ERROR);
         }

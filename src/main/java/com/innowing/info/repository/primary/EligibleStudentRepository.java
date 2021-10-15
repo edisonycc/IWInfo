@@ -2,6 +2,8 @@ package com.innowing.info.repository.primary;
 
 import com.innowing.info.entity.primary.EligibleStudent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -17,4 +19,13 @@ public interface EligibleStudentRepository extends JpaRepository<EligibleStudent
     // List<EligibleStudent> findEligibleStudentByHkuIdContaining(String hkuId);
     @Transactional
     void deleteByHkuId (Long hkuId);
+
+    //    @Modifying
+//    @Query("update EligibleStudent student set student.isActive =?1 where student.hkuId =?2")
+//    void setIsActiveForAll(Boolean isActive, Long hkuId);
+
+    @Transactional
+    @Modifying
+    @Query("update EligibleStudent student set student.isActive = false where student.hkuId > 0")
+    void setAllStudentInactive();
 }

@@ -83,11 +83,13 @@ public class StudentService {
             studentRepository.save(_student);
 
             return ServerResponse.getInstance().responseEnum(ResponseEnum.UPDATE_SUCCESS);
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
             return ServerResponse.getInstance().responseEnum(ResponseEnum.INNER_ERROR);
         }
     }
+
+
 
 //    public Page<Student> getStudent(StudentPage studentPage,
 //                                    StudentSearchCriteria studentSearchCriteria) {

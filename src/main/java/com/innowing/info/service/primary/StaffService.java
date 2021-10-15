@@ -3,17 +3,23 @@ package com.innowing.info.service.primary;
 import com.innowing.info.common.ResponseEnum;
 import com.innowing.info.common.ServerResponse;
 import com.innowing.info.entity.primary.EligibleStudent;
+import com.innowing.info.entity.primary.facility.FacilityStaffId;
+import com.innowing.info.entity.primary.facility.FacilityStaffSkill;
+import com.innowing.info.entity.primary.facility.FacilityStudentId;
+import com.innowing.info.entity.primary.facility.FacilityStudentSkill;
 import com.innowing.info.model.StaffPage;
 import com.innowing.info.model.StaffSearchCriteria;
 import com.innowing.info.repository.primary.StaffCriteriaRepository;
 import com.innowing.info.repository.primary.StaffRepository;
 import com.innowing.info.entity.primary.Staff;
+import com.innowing.info.repository.primary.facility.FacilityRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,6 +34,9 @@ public class StaffService {
 
     @Autowired
     StaffCriteriaRepository staffCriteriaRepository;
+
+    @Autowired
+    FacilityRepository facilityRepository;
 
     @Autowired
     public StaffService(StaffRepository staffRepository) {
@@ -67,34 +76,58 @@ public class StaffService {
     }
 
     @Transactional
-    public ServerResponse updateStaff(Long hkuId, Staff staff) {
+    public ServerResponse updateStaff(Long id, Staff staff) {
         try {
 //            Long id = eligibleStudent.getId();
-            Optional<Staff> _staff = staffRepository.findStaffByHkuId(hkuId);
+            Optional<Staff> staffOptional = staffRepository.findById(id);
 
-            if(_staff.isPresent()) {
-                if (staff.getHkuId() != null  && !Objects.equals(_staff.get().getHkuId(), staff.getHkuId()))
-                    _staff.get().setHkuId(staff.getHkuId());
-                if (staff.getName() != null  && !Objects.equals(_staff.get().getName(), staff.getName()))
-                    _staff.get().setName(staff.getName());
-                if (staff.getEmail() != null  && !Objects.equals(_staff.get().getEmail(), staff.getEmail()))
-                    _staff.get().setEmail(staff.getEmail());
-                if (staff.getCardId() != null  && !Objects.equals(_staff.get().getCardId(), staff.getCardId()))
-                    _staff.get().setCardId(staff.getCardId());
-                if (staff.getFaculty() != null  && !Objects.equals(_staff.get().getFaculty(), staff.getFaculty()))
-                    _staff.get().setFaculty(staff.getFaculty());
-                if (staff.getDepartment() != null  && !Objects.equals(_staff.get().getDepartment(), staff.getDepartment()))
-                    _staff.get().setDepartment(staff.getDepartment());
-                if (staff.getStaffCategory() != null  && !Objects.equals(_staff.get().getStaffCategory(), staff.getStaffCategory()))
-                    _staff.get().setStaffCategory(staff.getStaffCategory());
-                if (staff.getTitle() != null  && !Objects.equals(_staff.get().getTitle(), staff.getTitle()))
-                    _staff.get().setTitle(staff.getTitle());
-//            _student.setMemberStatus(eligibleStudent.getMemberStatus());
+            if(staffOptional.isPresent()) {
+                if (staff.getHkuId() != null  && !Objects.equals(staffOptional.get().getHkuId(), staff.getHkuId()))
+                    staffOptional.get().setHkuId(staff.getHkuId());
+                if (staff.getName() != null  && !Objects.equals(staffOptional.get().getName(), staff.getName()))
+                    staffOptional.get().setName(staff.getName());
+                if (staff.getEmail() != null  && !Objects.equals(staffOptional.get().getEmail(), staff.getEmail()))
+                    staffOptional.get().setEmail(staff.getEmail());
+                if (staff.getGender() != null  && !Objects.equals(staffOptional.get().getGender(), staff.getGender()))
+                    staffOptional.get().setGender(staff.getGender());
+                if (staff.getCardId() != null  && !Objects.equals(staffOptional.get().getCardId(), staff.getCardId()))
+                    staffOptional.get().setCardId(staff.getCardId());
+                if (staff.getFaculty() != null  && !Objects.equals(staffOptional.get().getFaculty(), staff.getFaculty()))
+                    staffOptional.get().setFaculty(staff.getFaculty());
+                if (staff.getDepartment() != null  && !Objects.equals(staffOptional.get().getDepartment(), staff.getDepartment()))
+                    staffOptional.get().setDepartment(staff.getDepartment());
+                if (staff.getTitle() != null  && !Objects.equals(staffOptional.get().getTitle(), staff.getTitle()))
+                    staffOptional.get().setTitle(staff.getTitle());
+                if (staff.getRole() != null  && !Objects.equals(staffOptional.get().getRole(), staff.getRole()))
+                    staffOptional.get().setRole(staff.getRole());
+                if (staff.getStaffCategory() != null  && !Objects.equals(staffOptional.get().getStaffCategory(), staff.getStaffCategory()))
+                    staffOptional.get().setStaffCategory(staff.getStaffCategory());
+                if (staff.getAccessGranted() != null  && !Objects.equals(staffOptional.get().getAccessGranted(), staff.getAccessGranted()))
+                    staffOptional.get().setAccessGranted(staff.getAccessGranted());
 
-                if (staff.getAccessGranted() != null  && !Objects.equals(_staff.get().getAccessGranted(), staff.getAccessGranted()))
-                    _staff.get().setAccessGranted(staff.getAccessGranted());
+                if (staff.getFacilityStaffSkills() != null
+                        && !Objects.equals(staffOptional.get().getFacilityStaffSkills(), staff.getFacilityStaffSkills())
+                ){
+                    List<FacilityStaffSkill> facilityStaffSkillList = staff.getFacilityStaffSkills();
+                    List<FacilityStaffSkill> newFacilityStaffSkillList = new ArrayList<>();
+                    for (FacilityStaffSkill fss : facilityStaffSkillList) {
+                        FacilityStaffId facilityStaffId = new FacilityStaffId(
+                                fss.getId().getFacilityId(),
+                                fss.getId().getStaffId()
+                        );
+                        FacilityStaffSkill _facilityStaffSkill = new FacilityStaffSkill(
+                                facilityStaffId,
+                                facilityRepository.getOne(facilityStaffId.getFacilityId()),
+                                staffRepository.getOne(facilityStaffId.getStaffId()),
+                                fss.getLevel()
+                        );
+                        newFacilityStaffSkillList.add(_facilityStaffSkill);
+                    }
+                    staffOptional.get().setFacilityStaffSkills(newFacilityStaffSkillList);
+                    log.info(newFacilityStaffSkillList.toString());
+                }
 
-                staffRepository.save(_staff.get());
+                staffRepository.save(staffOptional.get());
                 return ServerResponse.getInstance().responseEnum(ResponseEnum.UPDATE_SUCCESS);
             }
 

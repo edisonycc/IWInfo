@@ -1,6 +1,7 @@
 package com.innowing.info.entity.primary.project;
 
 import com.fasterxml.jackson.annotation.*;
+import com.innowing.info.entity.primary.facility.FacilityStudentUsage;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Fetch;
@@ -51,6 +52,7 @@ public class Project {
     )
     @JsonManagedReference(value = "project-students")
     private List<ProjectStudent> projectStudents;
+
     @OneToMany(
             mappedBy = "project",
             cascade = CascadeType.ALL,
@@ -60,6 +62,16 @@ public class Project {
     @Fetch(value = FetchMode.SUBSELECT)
     @JsonManagedReference(value = "project-staffs")
     private List<ProjectStaff> projectStaffs;
+
+    @OneToMany(
+            mappedBy = "project",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonManagedReference(value = "student-facility-usage-project")
+    private List<FacilityStudentUsage> facilityStudentUsages;
 
     public void setProjectStudents(List<ProjectStudent> projectStudents) {
         if(this.projectStudents == null) {

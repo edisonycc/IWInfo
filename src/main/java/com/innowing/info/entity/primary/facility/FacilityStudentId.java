@@ -1,4 +1,4 @@
-package com.innowing.info.entity.primary.project;
+package com.innowing.info.entity.primary.facility;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectStudentId implements Serializable {
-    private Long projectId;
+public class FacilityStudentId implements Serializable {
+    private Long facilityId;
     private Long eligibleStudentId;
 }
