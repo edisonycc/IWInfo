@@ -19,7 +19,8 @@ public enum ResponseEnum {
     CLAZZ_EXSIT(3002, "班级已存在"),
     DELETE_SUCCESS(20000, "删除成功"),
     DELETE_FAILED(30000, "Delete failed."),
-    CARDID_NOTFOUNT(30003, "CardId not exists")
+    CARDID_NOT_FOUNT(30003, "CardId not exists"),
+    MEMBER_NOT_FOUNT(30004, "Eligible student/staff data is not updated")
     ;
     Integer code;		//响应码
     String message;		//响应信息

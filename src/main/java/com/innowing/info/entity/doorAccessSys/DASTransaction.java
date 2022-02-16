@@ -27,12 +27,12 @@ public class DASTransaction {
     private String cardId;
     @Column(name = "DoorId")
     private Integer doorId;
-    @Column(name = "UserID", updatable=false)
+    @Column(name = "UserId", updatable=false, insertable = false)
     private Integer dasUserId;
 //    @Transient
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumn(name = "UserId",updatable = false)
+    @JoinColumn(name = "UserId",updatable = false, insertable = false)
     private DASUser dasUser;
 //    @Column(name = "UserId")
 //    private Integer userId;

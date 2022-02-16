@@ -36,4 +36,8 @@ public class ProjectStaffController {
     ServerResponse updateProjectStaffList(@RequestBody List<ProjectStaff> projectStaffList){
         return projectStaffService.updateProjectStaffList(projectStaffList);
     }
+
+    @DeleteMapping("deleteAllProjectStaffs")
+    @ResponseBody
+    ServerResponse deleteAllProjectStudents() { return projectStaffService.deleteAllProjectStaffs();}
 }

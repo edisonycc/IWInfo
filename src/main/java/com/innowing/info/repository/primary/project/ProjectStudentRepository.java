@@ -21,5 +21,11 @@ public interface ProjectStudentRepository extends JpaRepository<ProjectStudent, 
     @Transactional
     @Query("delete from ProjectStudent ps where ps.project.id = ?1 and ps.eligibleStudent.id =?2")
     void deleteById_ProjectIdAndId_EligibleStudentId(Long projectId, Long eligibleStudentId);
+
+    @Transactional
+    @Modifying
+    @Query("delete from ProjectStudent")
+    void deleteAllProjectStudents();
+
 }
 

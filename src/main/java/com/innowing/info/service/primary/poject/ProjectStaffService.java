@@ -51,8 +51,9 @@ public class ProjectStaffService {
                     // Check if needs find staff by email start with..
                     Optional<Staff> staffOptional = staffRepository.findStaffByEmail(email);
                     if (!staffOptional.isPresent()) {
-                        Staff Staff = projectStaff.getStaff();
-                        staffRepository.save(Staff);
+//                        Staff Staff = projectStaff.getStaff();
+//                        staffRepository.save(Staff);
+                        return;
                     }
                     String projectTitle = projectStaff.getProject().getTitle();
                     if (staffOptional.isPresent() && !Objects.isNull(projectTitle)) {
@@ -80,6 +81,16 @@ public class ProjectStaffService {
         catch (Exception e) {
             log.info(e.getMessage());
             return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
+        }
+    }
+
+    public ServerResponse deleteAllProjectStaffs() {
+        try {
+            projectStaffRepository.deleteAllProjectStaffs();
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.DELETE_SUCCESS);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.INNER_ERROR);
         }
     }
 }

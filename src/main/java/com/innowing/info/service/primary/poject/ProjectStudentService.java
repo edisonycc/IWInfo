@@ -51,8 +51,9 @@ public class ProjectStudentService {
                 if (!Objects.isNull(email)) {
                     Optional<EligibleStudent> studentOptional = eligibleStudentRepository.findEligibleStudentByEmail(email);
                     if (!studentOptional.isPresent()) {
-                        EligibleStudent eligibleStudent = projectStudent.getEligibleStudent();
-                        eligibleStudentRepository.save(eligibleStudent);
+//                        EligibleStudent eligibleStudent = projectStudent.getEligibleStudent();
+//                        eligibleStudentRepository.save(eligibleStudent);
+                        return;
                     }
                     String projectTitle = projectStudent.getProject().getTitle();
                     if (studentOptional.isPresent() && !Objects.isNull(projectTitle)) {
@@ -100,5 +101,15 @@ public class ProjectStudentService {
         if (ProjectStudentsListOptional.isPresent())
             return ServerResponse.getInstance().responseEnum(ResponseEnum.GET_SUCCESS).data("projectStudentList", ProjectStudentsListOptional.get());
         return ServerResponse.getInstance().responseEnum(ResponseEnum.FAILED);
+    }
+
+    public ServerResponse deleteAllProjectStudents() {
+        try {
+            projectStudentRepository.deleteAllProjectStudents();
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.DELETE_SUCCESS);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ServerResponse.getInstance().responseEnum(ResponseEnum.INNER_ERROR);
+        }
     }
 }

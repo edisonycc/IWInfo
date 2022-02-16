@@ -49,4 +49,10 @@ public class ProjectStudentController {
     ServerResponse deleteProjectStudent(@PathVariable long projectId, @PathVariable long eligibleStudentId) {
         return projectStudentService.deleteProjectStudent(projectId, eligibleStudentId);
     }
+
+    @DeleteMapping("deleteAllProjectStudents")
+    @ResponseBody
+    ServerResponse deleteAllProjectStudents() { return projectStudentService.deleteAllProjectStudents();}
+
+
 }
